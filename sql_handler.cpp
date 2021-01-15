@@ -8,14 +8,16 @@ MYSQL* connect()
     connect=mysql_init(NULL);
     if(!connect)
     {
-        cout<<"failed"<<endl;
+        cout<<"Connection failed"<<endl;
+        return NULL;
     }
-    connect = mysql_real_connect(connect, "localhost", "admin", "123456", "sample", 0,NULL,0);
+    connect = mysql_real_connect(connect, "localhost", "admin", "123456", "project", 0,NULL,0);
     if(connect)
     {
         cout<<"Connection Sucessfull"<<endl;
+        return connect;
     }
-    return connect;
+    return NULL;
 }
 MYSQL_RES* execute_query(MYSQL* connect, string query)
 {
@@ -48,8 +50,8 @@ void show_result(MYSQL_RES * res_set)
 }
 int main(int argc, char const *argv[])
 {
-    MYSQL*connect_obj=connect();
-    MYSQL_RES * res_set= execute_query(connect_obj,"select * from test where entry1='sohan';");
+    MYSQL* connect_obj=connect();
+    MYSQL_RES* res_set= execute_query(connect_obj,"show tables;");
     show_result(res_set);
     return 0;
 }
