@@ -1,5 +1,4 @@
-#include<iostream>
-#include<cstring>
+#include<bits/stdc++.h>
 #include<mysql/mysql.h>
 using namespace std;
 MYSQL* connect()
@@ -48,10 +47,11 @@ void show_result(MYSQL_RES * res_set)
     }
     //mysql_close (connect);
 }
+/* ## UNCOMMENT THIS ONLY IF YOU WANT IT TO RUN SEPERATELY ##
 int main(int argc, char const *argv[])
 {
     MYSQL* connect_obj=connect();
     MYSQL_RES* res_set= execute_query(connect_obj,"show tables;");
     show_result(res_set);
     return 0;
-}
+}*/
