@@ -33,7 +33,7 @@ int main(int argc, char const *argv[])
         cout<<"Enter Email ID: ";
         cin>>email;
         string query="insert into userTable(userName,passwords,emailID) values('"+username+"','"+password+"','"+email+"');";
-        MYSQL_RES * res_set =execute_query(connect_obj,query);
+        res_set =execute_query(connect_obj,query);
         cout<<query<<endl;
     }
     return 0;
