@@ -1,7 +1,6 @@
 #include<bits/stdc++.h>
 #include "sql_handler.cpp"
 #include<mysql/mysql.h>
-using namespace std;
 
 void userMenu(int UserID, string username)
 {
@@ -11,22 +10,22 @@ void userMenu(int UserID, string username)
     switch(ch)
     {
         case 1:
-            //uploadFile.insertIntoUserFile(userId);
+            //insertIntoUserFile(userId);
             break;
         case 2:
-            //downloadFile.download(userId);
+            //download(userId);
             break;
         case 3:
-            //deleteData.deleteFile(userId);
+            //deleteFile(userId);
             break;
         case 4:
-            //deleteData.deleteVersion(userId);
+            //deleteVersion(userId);
             break;
         case 5:
-            //deleteData.deleteUser(userId);
+            //deleteUser(userId);
             break;
         case 6:
-            //UpdateFile.update(userId);
+            //update(userId);
             break;
         case 7:
             cout<<"Bye..."<<endl;
@@ -63,8 +62,8 @@ int main(int argc, char const *argv[])
             int userID,i=0;
             while (((row=mysql_fetch_row(res_set)) !=NULL))
                 userID=atoi(row[i]);
+            cout<<"User ID: "<<userID<<endl;
             userMenu(userID,username);
-            //cout<<userID<<endl;
         }
         
     }
@@ -78,9 +77,9 @@ int main(int argc, char const *argv[])
         cout<<"Enter Email ID: ";
         cin>>email;
         string query="insert into userTable(userName,passwords,emailID) values('"+username+"','"+password+"','"+email+"');";
-        res_set =execute_query(connect_obj,query);
         cout<<query<<endl;
+        res_set =execute_query(connect_obj,query);
     }
+    mysql_close (connect_obj);
     return 0;
 }
-
