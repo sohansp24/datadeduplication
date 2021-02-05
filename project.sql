@@ -1,7 +1,9 @@
 /*FOR MYSQL ONLY. FOR OTHER DATABASES THERE MIGHT BE SYNTAX ERRORS..*/
 
 create database project;
+
 use project;
+
 create table userTable
 ( userId int  unique not null auto_increment,
   userName varchar(20) primary key,
