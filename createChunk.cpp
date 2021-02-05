@@ -42,9 +42,7 @@ void createChunk(int fileId,string fileLocation)
     }
     //fin=pbuf;
 }
-//*
 int main()
 {
     createChunk(1,"/home/admin/file1.txt");
 }
-//*/
