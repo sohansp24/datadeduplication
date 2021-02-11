@@ -21,7 +21,7 @@ string string_w;
 
 int inithash()
 {
-    int hash=0;
+    long hash=0;
     //cout<<"---";
     for (int i=0;i<=1023;i++)
     {
@@ -67,6 +67,7 @@ int nexthash(int prevhash)
 void createChunk(int fileId,string fileLocation)
 {   
     int mask=1<<13;
+    cout<<"Mask"<<mask;
     mult=1;
     bufferptr=0;
     mask--;
@@ -84,20 +85,23 @@ void createChunk(int fileId,string fileLocation)
     cout<<"INT Hash:-   "<<hash<<endl;
     int curr=size;
     size=fin.gcount();
-    cout<<size<<endl;
+    //cout<<size<<endl;
     //size=pbuf->in_avail();
     curr-=size;
     //cout<<"Size of the file is: "<<curr<<endl;
     //cout<<string_w;
     //vector <char> buffer; 
     //cout<<"---"<<curr<<" "<<size<<" "<<"  "<<string_w.size()<<" "<<(curr<size);
-    cout<<string_w.size()<<" bytes read\nContents Read are:-\n"<<string_w<<"\nLength of the file to be fetched "<<curr<<endl;
+    cout<<string_w.size()<<" bytes read\nContents Read are:-\n"<<string_w<<"\nSize of the file to be fetched "<<curr<<endl;
     //cout<<len(string_w);
-    while(curr<size)
+    cout<<(hash&mask);
+    while(curr>size)
     {
+       //cout<<"---";
         //cout<<"    "<<(hash & mask);
-        if ((hash  & mask==0) || curr==size-1)
+        if ((hash & mask)==0 || curr==size-1)
         {
+            cout<<"----";
             //cout<<"---"; 
             //char* wordarray=new char [string_w.size()+1];
             //strcpy(wordarray,string_w.c_str());
