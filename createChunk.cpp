@@ -11,7 +11,7 @@ using namespace std;
 MYSQL * connect_obj=connect();
 int hconst=69069;
 int mult;
-int buffer[1025];
+int buffer[1024];
 int bufferptr;
 unordered_map<int,vector<string>> map1;
 unordered_map<string,int> map4count;
