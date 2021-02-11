@@ -67,7 +67,7 @@ int nexthash(int prevhash)
 void createChunk(int fileId,string fileLocation)
 {   
     int mask=1<<13;
-    cout<<"Mask"<<mask;
+    //cout<<"Mask"<<mask;
     mult=1;
     bufferptr=0;
     mask--;
@@ -84,7 +84,7 @@ void createChunk(int fileId,string fileLocation)
     long hash=inithash();
     cout<<"INT Hash:-   "<<hash<<endl;
     int curr=size;
-    size=fin.gcount();
+    size=fin.gcount()*1024;
     //cout<<size<<endl;
     //size=pbuf->in_avail();
     curr-=size;
@@ -94,7 +94,7 @@ void createChunk(int fileId,string fileLocation)
     //cout<<"---"<<curr<<" "<<size<<" "<<"  "<<string_w.size()<<" "<<(curr<size);
     cout<<string_w.size()<<" bytes read\nContents Read are:-\n"<<string_w<<"\nSize of the file to be fetched "<<curr<<endl;
     //cout<<len(string_w);
-    cout<<(hash&mask);
+    //cout<<(hash&mask);
     while(curr>size)
     {
        //cout<<"---";
