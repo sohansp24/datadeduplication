@@ -19,7 +19,6 @@ vector <string> array_of_file_sha;
 
 ifstream fin;
 string string_w;
-
 int inithash()
 {
     long hash=0;
@@ -39,7 +38,13 @@ int inithash()
         if(i>0)
 			mult *= hconst;
     }
-    cout<<bufferptr;
+    /*string st="";
+    for(int i: buffer)
+    {
+        st += to_string(i);
+    }
+    cout<<st<<"\n";*/
+    //cout<<bufferptr;
 	return hash ;
 }
 
@@ -56,7 +61,14 @@ int nexthash(int prevhash)
 	buffer[bufferptr] =c; 
 	bufferptr++;
 	bufferptr = bufferptr % (sizeof(buffer)/sizeof(buffer[0]));
+    //cout<<"Buffer:=   "<<bufferptr<<endl;
     //cout<<string_w;
+    /*string st="";
+    for(int i: buffer)
+    {
+        st += to_string(i);
+    }
+    cout<<st<<endl;*/
 	return prevhash;
 }
 void getShaCount()
@@ -104,16 +116,22 @@ void createChunk(int fileId,string fileLocation)
     cout<<"* INT Hash:-\t"<<hash<<endl;
     int curr=size;
     curr-=fin.gcount()*1024;
+    //cout<<fin.gcount();
     //curr-=tmp_size;
     //cout<<curr<<"  "<<size<<endl;
     //cout<<"* "<<string_w.size()<<" bytes read\n* Contents Read are:-\n"<<string_w<<"\n* Size of the file to be fetched "<<curr<<endl;
     //int j=0;
+    //ofstream fout;
+    //fout.open("testing.txt",ios_base::app);
     while(curr<size)
     {
+        //fout<<string_w;
         if ((hash & mask)==0 || curr==size-1)
         {
             //cout<<"----";
             string hashIn256=sha256(string_w);
+            cout<<string_w<<endl;
+            cout<<curr<<"    "<<(hash & mask);
             cout<<"Hash Value  "<<hashIn256<<endl;
             cout<<"if iffff";
             array_of_file_sha.push_back(hashIn256);
@@ -125,7 +143,7 @@ void createChunk(int fileId,string fileLocation)
             //cout<<"----------";
             if(map1.find(hash)==map1.end())
             {
-                map1.insert(make_pair(hash,vector<string>{hashIn256}));
+                map1.insert(make_pair(hash,(vector<string>){hashIn256}));
                 //MYSQL_RES* res_set;
                 string query="Insert into hashTable (userFileId,rollHash,sha256) values ('"+ID+"','"+has+"','"+hashIn256+"')";
                 execute_query(connect_obj,query);
@@ -143,12 +161,15 @@ void createChunk(int fileId,string fileLocation)
             {
                 cout<<counter++<<"=> YES hash\tYES 256\t"<<"  =>  "<<has<<"\tsha256\t"<<hashIn256;
             }
+            string_w="";
         }
         hash = nexthash(hash);
         //cout<<fin.gcount()*1024<<"    "<<curr<<endl;
+        //cout<<"\t"<<curr++;
         curr++;
     }
-    //cout<<"=====";
+    //fout.close();
+    cout<<"=====";
     //str.clear();
     //copy(array_of_file_sha.begin(), array_of_file_sha.end()-1,std::ostream_iterator<string>(str, ","));
     //str << array_of_file_sha.back();
@@ -170,9 +191,9 @@ void createChunk(int fileId,string fileLocation)
     }
     array_of_file_sha.clear();
 }
-/*
+//*
 int main()
 {
-    createChunk(1,"/home/admin/Windows.txt");
+    createChunk(1,"/home/admin/sample.txt");
 }
-/*
+//*
