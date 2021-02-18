@@ -10,6 +10,7 @@ unordered_map <string,int> countmap;
 MYSQL_RES* res_set;
 MYSQL_ROW row;
 int i=0;
+
 vector<int> retriveshaID(int fileID)
 {
     vector<int> arr;
@@ -22,11 +23,10 @@ vector<int> retriveshaID(int fileID)
     {
         while (((row=mysql_fetch_row(res_set)) !=NULL))
         {
-            arr.push_back(atoi(row[i]));
+            arr.push_back(stoi(row[i]));
         }
     }
     return arr;
-    
 }
 
 int retrieveFileId(int userId,string fileName)
@@ -39,7 +39,7 @@ int retrieveFileId(int userId,string fileName)
     {
         while (((row=mysql_fetch_row(res_set)) !=NULL))
         {
-            userFileID=atoi(row[i]);
+            userFileID=stoi(row[i]);
         }
     }
     return userFileID;
@@ -63,6 +63,7 @@ vector<string> retrieveSha(vector<int> shaid)
     }
     return arrSha;
 }
+
 int showFiles(int UserId)
 {
     string query="select userFileId,fileName from userFile where userId= "+to_string(UserId)+" ;";
@@ -82,6 +83,7 @@ int showFiles(int UserId)
     cout<<endl;
     return fileid;
 }
+
 string showFilesName(int fileId)
 {
     string query="select fileName from userFile where userfileId= "+to_string(fileId)+" ;";
@@ -97,6 +99,7 @@ string showFilesName(int fileId)
     }
     return fileName;
 }
+
 vector<int> retrieveAllFileId(int userId)
 {
     string query="select userFileId from userFile where userId= "+to_string(userId)+" ;";
@@ -106,11 +109,12 @@ vector<int> retrieveAllFileId(int userId)
     {
         while (((row=mysql_fetch_row(res_set)) !=NULL))
         {
-            allFileId.push_back(atoi(row[i]));
+            allFileId.push_back(stoi(row[i]));
         }
     }
     return allFileId;
 }
+
 vector<string> retrieveAllShaValue(int userId)
 {
     vector<string> allShaValues;
@@ -131,6 +135,7 @@ vector<string> retrieveAllShaValue(int userId)
     }
     return allShaValues;
 }
+
 int retrieveVersionNo(int fileId)
 {
     string query="select MAX(versionNo) from userFile where versionOf= "+to_string(fileId)+" ;";
@@ -141,11 +146,12 @@ int retrieveVersionNo(int fileId)
     {
         while (((row=mysql_fetch_row(res_set)) !=NULL))
         {
-            versionNo=atoi(row[i]);
+            versionNo=stoi(row[i]);
         }
     }
     return versionNo;
 }
+
 int showFileVersion(int fileId)
 {
     string query="select fileName,versionNo from userFile where versionOf= "+to_string(fileId)+" ;";
@@ -165,6 +171,7 @@ int showFileVersion(int fileId)
     cout<<endl;
     return temp;
 }
+
 string showVerionFiles(int userId)
 {
     string query="select fileName from userFile where userId= "+to_string(userId)+ "and versionNo= 1 ";
@@ -184,6 +191,7 @@ string showVerionFiles(int userId)
     cout<<endl;
     return filename;
 }
+
 int getVersionNo(int fileId)
 {
     int versionno=0;
@@ -194,11 +202,12 @@ int getVersionNo(int fileId)
     {
         while (((row=mysql_fetch_row(res_set)) !=NULL))
         {
-            versionno=atoi(row[i]);
+            versionno=stoi(row[i]);
         }
     }
     return versionno;
 }
+
 vector<string> retrieveShaValue(int fileId)
 {
     vector<string> arr;
