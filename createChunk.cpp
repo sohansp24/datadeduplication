@@ -86,7 +86,7 @@ void getShaCount()
         while (((row=mysql_fetch_row(res_set)) !=NULL))
         {
             string s=row[0];
-            int i=atoi(row[1]);
+            int i=stoi(row[1]);
             map4count.insert(make_pair(s,i));
         }
     }
@@ -191,9 +191,9 @@ void createChunk(int fileId,string fileLocation)
     }
     array_of_file_sha.clear();
 }
-//*
+/*
 int main()
 {
     createChunk(1,"/home/admin/sample.txt");
 }
-//*
+*/
