@@ -1,6 +1,13 @@
 #include<bits/stdc++.h>
-#include "sql_handler.cpp"
 #include<mysql/mysql.h>
+#include "sql_handler.h"
+namespace mysql_main
+{
+    MYSQL * connect_obj=connect();
+    MYSQL_RES * res_set;
+    MYSQL_ROW row;
+}
+using namespace std;
 
 void userMenu(int UserID, string username)
 {
@@ -38,9 +45,7 @@ void userMenu(int UserID, string username)
 
 int main(int argc, char const *argv[])
 {
-    static MYSQL * connect_obj=connect();
-    static MYSQL_RES * res_set;
-    static MYSQL_ROW row;
+
     int choice;
     cout<<"Enter Choice:\n1.Login\n2.Register"<<endl;
     cin>>choice;
@@ -53,19 +58,20 @@ int main(int argc, char const *argv[])
         cout<<"Enter Password: ";
         cin>>password;
         string query="select userID from  userTable where userName='"+username+"' and passwords='"+password+"';";
-        res_set=execute_query(connect_obj,query);
-        unsigned int numrows=mysql_num_rows(res_set);
+        mysql_main::res_set=execute_query(mysql_main::connect_obj,query);
+        unsigned int numrows=mysql_num_rows(mysql_main::res_set);
+        int i=0;
         if (numrows==0)
             cout<<"You've entered incorrect username or Password\nTry again..."<<endl;
         else
         {
             int userID,i=0;
-            while (((row=mysql_fetch_row(res_set)) !=NULL))
-                userID=atoi(row[i]);
+            while (((mysql_main::row=mysql_fetch_row(mysql_main::res_set)) !=NULL))
+                userID=atoi(mysql_main::row[i]);
             cout<<"User ID: "<<userID<<endl;
             userMenu(userID,username);
         }
-        
+
     }
     else
     {
@@ -78,8 +84,8 @@ int main(int argc, char const *argv[])
         cin>>email;
         string query="insert into userTable(userName,passwords,emailID) values('"+username+"','"+password+"','"+email+"');";
         cout<<query<<endl;
-        res_set =execute_query(connect_obj,query);
+        mysql_main::res_set =execute_query(mysql_main::connect_obj,query);
     }
-    mysql_close (connect_obj);
+    mysql_close (mysql_main::connect_obj);
     return 0;
 }
