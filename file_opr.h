@@ -1,10 +1,12 @@
+#ifndef  FILE_OPR
+#define FILE_OPR
 #include<bits/stdc++.h>
 #include<fstream>
 using namespace std;
 void createFile(int hash_val,string word, string hash256val)
 {
     ofstream fout;
-    ifstream fin;
+    //ifstream fin;
     string fileName = "chunks/"+hash256val;
     //string fileName=hash256val;
     fout.open(fileName);
@@ -13,15 +15,15 @@ void createFile(int hash_val,string word, string hash256val)
     fout.close();
 
 }
-void createOriginal(string sha256[],string fileName)
+void createOriginal(vector<string> sha256,string fileName)
 {
     ofstream fout;
     ifstream fin;
     string str;
     string str1="";
-    for(int i=0;i<(sizeof(sha256)/sizeof(string));i++)
+    for(string i: sha256)
     {
-        string chunkname="chunks/"+sha256[i];
+        string chunkname="chunks/"+i;
         fin.open(chunkname);
         while ( getline (fin,str) )
         {
@@ -42,6 +44,7 @@ void deleteFile(string shaValue)
     else 
         cout<<"File Deletion Failed"<<endl;
 }
+#endif
 /*
 int main()
 {
