@@ -1,14 +1,23 @@
+#ifndef CREATE_CHUNK
+#define CREATE_CHUNK
 #include<bits/stdc++.h>
 #include<unordered_map>
 #include<mysql/mysql.h>
 #include<fstream>
 #include<vector>
-#include "sql_handler.cpp"
-#include "sha256.cpp"
-#include "file_opr.cpp"
+#include "sql_handler.h"
+#include "sha256_main.h"
+#include "file_opr.h"
+
+namespace mysql_createchunk
+{
+    MYSQL * connect_obj=connect();
+    MYSQL_RES * res_set;
+    MYSQL_ROW row;
+}
 using namespace std;
 
-MYSQL * connect_obj=connect();
+
 int hconst=69069;
 int mult;
 int buffer[1024];
@@ -29,6 +38,7 @@ int inithash()
         fin.read(&d,1);
         c=(int)d;
         //cout<<d<<"  "<<c<<"\t";
+        cout<<"INIT:- "<<bufferptr;
         string_w+=d;
         buffer[bufferptr]=c;
         bufferptr++;
@@ -44,7 +54,6 @@ int inithash()
         st += to_string(i);
     }
     cout<<st<<"\n";*/
-    //cout<<bufferptr;
 	return hash ;
 }
 
@@ -55,10 +64,10 @@ int nexthash(int prevhash)
     fin.read(&d,1);
     c=(int)d;
 	string_w+= d;
-	prevhash -= mult * buffer[bufferptr]; 
-	prevhash *= hconst; 
+	prevhash -= mult * buffer[bufferptr];
+	prevhash *= hconst;
 	prevhash += c;
-	buffer[bufferptr] =c; 
+	buffer[bufferptr] =c;
 	bufferptr++;
 	bufferptr = bufferptr % (sizeof(buffer)/sizeof(buffer[0]));
     //cout<<"Buffer:=   "<<bufferptr<<endl;
@@ -69,24 +78,25 @@ int nexthash(int prevhash)
         st += to_string(i);
     }
     cout<<st<<endl;*/
+    cout<<"Next:- "<<bufferptr;
 	return prevhash;
 }
 void getShaCount()
 {
     string query="select * from shaTable;";
-    MYSQL_ROW row;
-    MYSQL_RES* res_set=execute_query(connect_obj,query);
-    unsigned int numrows = mysql_num_rows(res_set);
+    mysql_createchunk::res_set=execute_query(mysql_createchunk::connect_obj,query);
+    unsigned int numrows = mysql_num_rows(mysql_createchunk::res_set);
+    int i=0;
     if(numrows==0)
     {
         cout<<"Empty"<<endl;
     }
     else
     {
-        while (((row=mysql_fetch_row(res_set)) !=NULL))
+        while (((mysql_createchunk::row=mysql_fetch_row(mysql_createchunk::res_set)) !=NULL))
         {
-            string s=row[0];
-            int i=stoi(row[1]);
+            string s=mysql_createchunk::row[0];
+            int i=stoi(mysql_createchunk::row[1]);
             map4count.insert(make_pair(s,i));
         }
     }
@@ -99,7 +109,7 @@ bool isAvailSha(string hashIn256)
         return false;
 }
 void createChunk(int fileId,string fileLocation)
-{   
+{
     //array_of_file_sha.reserve(200);
     int mask=1<<13;
     mult=1;
@@ -144,9 +154,9 @@ void createChunk(int fileId,string fileLocation)
             if(map1.find(hash)==map1.end())
             {
                 map1.insert(make_pair(hash,(vector<string>){hashIn256}));
-                //MYSQL_RES* res_set;
+                //MYSQL_RES* mysql_createchunk::res_set;
                 string query="Insert into hashTable (userFileId,rollHash,sha256) values ('"+ID+"','"+has+"','"+hashIn256+"')";
-                execute_query(connect_obj,query);
+                execute_query(mysql_createchunk::connect_obj,query);
                 createFile(hash,string_w,hashIn256);
             }
             else if(find(it.begin(),it.end(),hashIn256)==it.end())
@@ -154,7 +164,7 @@ void createChunk(int fileId,string fileLocation)
                 cout<<"------";
                 map1.find(hash)->second.push_back(hashIn256);
                 string query="Insert into hashTable (userFileId,rollHash,sha256) values ('"+ID+"','"+has+"','"+hashIn256+"')";
-                execute_query(connect_obj,query);
+                execute_query(mysql_createchunk::connect_obj,query);
                 createFile(hash,string_w,hashIn256);
             }
             else
@@ -187,10 +197,11 @@ void createChunk(int fileId,string fileLocation)
         }
         else
             query="Insert into shaTable values ("+s+",1);";
-        execute_query(connect_obj,query);
+        execute_query(mysql_createchunk::connect_obj,query);
     }
     array_of_file_sha.clear();
 }
+#endif
 /*
 int main()
 {
