@@ -1,3 +1,5 @@
+#ifndef RETRIEVE_H
+#define RETRIEVE_H
 #include<bits/stdc++.h>
 #include<unordered_map>
 #include<mysql/mysql.h>
@@ -235,6 +237,7 @@ vector<string> retrieveShaValue(int fileId)
     }
     return arr;
 }
+#endif
 /*
 int main()
 {
