@@ -1,11 +1,16 @@
+#ifndef FILE_LEN_H
+#define FILE_LEN_H
 #include<bits/stdc++.h>
 #include<mysql/mysql.h>
 #include<fstream>
-#include "sql_handler.cpp"
-MYSQL* connect_obj=connect();
-MYSQL_RES* res_set;
-MYSQL_ROW row;
-int i=0;
+#include "sql_handler.h"
+namespace mysql_filelen
+{
+    MYSQL * connect_obj=connect();
+    MYSQL_RES * res_set;
+    MYSQL_ROW row;
+}
+using namespace std;
 void LengthOfOriginalFile(int fileId,string FileName)
 {
     string location="File/"+FileName;
@@ -20,7 +25,7 @@ void LengthOfOriginalFile(int fileId,string FileName)
         filesize=(end-begin)/1024;
     }
     string query="update userFile set fileSize= "+to_string(filesize+1) +" where userFileId= "+to_string(fileId)+" ;";
-    execute_query(connect_obj,query);
+    execute_query(mysql_filelen::connect_obj,query);
     fin.close();
 }
 void LengthOfChunkFile(vector<string> sha256list)
@@ -45,6 +50,7 @@ void LengthOfChunkFile(vector<string> sha256list)
         fin.close();
     }
 }
+#endif
 /*
 int main()
 {
