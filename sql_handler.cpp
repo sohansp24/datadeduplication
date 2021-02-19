@@ -1,6 +1,10 @@
+#ifndef SQL_HANDLER_H
+#define SQL_HANDLER_H
 #include<bits/stdc++.h>
 #include<mysql/mysql.h>
+
 using namespace std;
+
 MYSQL* connect()
 {
     MYSQL *connect;
@@ -20,8 +24,8 @@ MYSQL* connect()
     {
         cout<<"Database connection failed"<<endl;
         exit(1);
+        //return NULL;
     }
-    return NULL;
 }
 MYSQL_RES* execute_query(MYSQL* connect, string query)
 {
@@ -46,21 +50,22 @@ void show_result(MYSQL_RES * res_set)
     {
         while (((row=mysql_fetch_row(res_set)) !=NULL))
         {
-            cout << row[i] << endl;
+            cout << row[i]<< endl;
         }
     }
     else
     {
         cout<<"No entry found"<<endl;
         return;
-    }
-    
+    }   
 }
-/* //## UNCOMMENT THIS ONLY IF YOU WANT IT TO RUN SEPERATELY 
+#endif
+/*
 int main(int argc, char const *argv[])
 {
     MYSQL* connect_obj=connect();
-    MYSQL_RES* res_set= execute_query(connect_obj,"show tables;");
+    MYSQL_RES* res_set= execute_query(connect_obj,"select * from userTable;");
     show_result(res_set);
     return 0;
-}*/
+}
+*/
