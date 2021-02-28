@@ -12,7 +12,6 @@ namespace mysql_retrieve
     MYSQL_ROW row;
 }
 using namespace std;
-using namespace mysql_retrieve;
 unordered_map <string,int> countmap;
 vector<int> retriveshaID(int fileID)
 {
@@ -20,7 +19,6 @@ vector<int> retriveshaID(int fileID)
     int i=0;
     string query="select shaId from fileDetails where userFileId= "+to_string(fileID)+";";
     mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
-    MYSQL_ROW row;
     unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
     if (numrows!=0)
     {
@@ -36,7 +34,7 @@ int retrieveFileId(int userId,string fileName)
 {
     int userFileID=0;
     int i=0;
-    string query="select userFileId from userFile where userId= "+to_string(userId)+"and fileName= "+fileName+" ;";
+    string query="select userFileId from userFile where userId= "+to_string(userId)+"and fileName= '"+fileName+"' ;";
     mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
     unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
     if (numrows!=0)
@@ -161,6 +159,22 @@ int retrieveVersionNo(int fileId)
     }
     return versionNo;
 }
+int retrieveVersionId(int fileId,int versionNo)
+{
+    string query="select userFileId from userFile where versionOf= "+to_string(fileId)+" and versionNo= "+to_string(versionNo)+" ;";
+    mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
+    int versionId;
+    int i=0;
+    unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
+    if (numrows!=0)
+    {
+        while (((mysql_retrieve::row=mysql_fetch_row(mysql_retrieve::res_set)) !=NULL))
+        {
+            versionId=stoi(mysql_retrieve::row[i]);
+        }
+    }
+    return versionId;
+}
 
 int showFileVersion(int fileId)
 {
@@ -208,7 +222,7 @@ int getVersionNo(int fileId)
 {
     int i=0;
     int versionno=0;
-    string query="select versionNo from userfile where userFileId= "+to_string(fileId)+" ;";
+    string query="select versionNo from userFile where userFileId= "+to_string(fileId)+" ;";
     mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
     unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
     if (numrows!=0)
