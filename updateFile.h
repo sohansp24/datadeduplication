@@ -1,5 +1,5 @@
-#ifndef UPLOAD_FILE
-#define UPLOAD_FILE
+#ifndef UPDATE_FILE_H
+#define UPDATE_FILE_H
 #include<bits/stdc++.h>
 #include<ctime>
 #include<vector>
@@ -63,9 +63,10 @@ void update(int userId)
     else
         cout<<"File not found"<<endl;
 }
+/*
 int main()
 {
     update(1);
     return 0;
-}
+}*/
 #endif
