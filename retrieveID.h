@@ -22,6 +22,7 @@ vector<int> retriveshaID(int fileID)
     unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
     if (numrows!=0)
     {
+        cout<<"FOUND"<<endl;
         while (((mysql_retrieve::row=mysql_fetch_row(mysql_retrieve::res_set)) !=NULL))
         {
             arr.push_back(stoi(mysql_retrieve::row[i]));
@@ -34,7 +35,7 @@ int retrieveFileId(int userId,string fileName)
 {
     int userFileID=0;
     int i=0;
-    string query="select userFileId from userFile where userId= "+to_string(userId)+"and fileName= '"+fileName+"' ;";
+    string query="select userFileId from userFile where userId= "+to_string(userId)+" and fileName= '"+fileName+"' ;";
     mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
     unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
     if (numrows!=0)
@@ -52,7 +53,7 @@ vector<string> retrieveSha(vector<int> shaid)
     vector<string> arrSha;
     for(int i:shaid)
     {
-        string query="select sha256 from hashtable where shaid= "+to_string(i)+";";
+        string query="select sha256 from hashTable where shaId= "+to_string(i)+";";
         mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
         int j=0;
         unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
@@ -90,7 +91,7 @@ int showFiles(int UserId)
 
 string showFilesName(int fileId)
 {
-    string query="select fileName from userFile where userfileId= "+to_string(fileId)+" ;";
+    string query="select fileName from userFile where userFileId= "+to_string(fileId)+" ;";
     mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
     string fileName;
     int i=0;
@@ -199,7 +200,7 @@ int showFileVersion(int fileId)
 
 string showVerionFiles(int userId)
 {
-    string query="select fileName from userFile where userId= "+to_string(userId)+ "and versionNo= 1 ";
+    string query="select fileName from userFile where userId= '"+to_string(userId)+ "' and versionNo= 1 ";
     mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
     unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
     cout<<"File names are: "<<endl;
