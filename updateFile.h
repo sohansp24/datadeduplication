@@ -43,10 +43,22 @@ void update(int userId)
         tm *ltm=localtime(&now);
         string current_datentime=to_string(ltm->tm_mday)+"-"+to_string(1+ltm->tm_mon) +"-"+to_string(1900+ltm->tm_year)+"|"+to_string(5+ltm->tm_hour)+":"+to_string(30+ ltm->tm_hour)+":"+to_string(ltm->tm_sec);
         vector<string> tokens;
-        stringstream line(filename);
-        string intermediate;
-        while(getline(line,intermediate,'\\.'))
-            tokens.push_back(intermediate);
+        char *token = strtok((char*)filename.c_str(), "\\"); 
+        tokens.push_back((string)token);
+        while (token != NULL) 
+        { 
+            tokens.push_back((string)token);
+            token = strtok(NULL, "\\"); 
+        }  
+        /*char* intermediate;
+        char name[filename.length()];
+        strcpy(name,filename.c_str());
+        strtok(name,"//");
+        while (intermediate != NULL)
+        {
+            tokens.add(intermediate);
+            intermediate = strtok (NULL, "//");
+        }*/
         string newFileName=tokens.at(0)+"_"+current_datentime+"."+tokens.at(1);
         versionCount=versionNo+1;
         string query="insert into userFile (userId,fileName,versionNo,versionOf) values ("+to_string(userId)+",'"+newFileName+"',"+to_string(versionCount)+","+to_string(fileId)+");";
