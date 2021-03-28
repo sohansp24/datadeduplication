@@ -20,7 +20,7 @@ string fileName;
 int retrieveFileId(string fileName)
 {
     int fileId=0;
-    string query="select userFileId from userFile where fileName= "+fileName+" ;";
+    string query="select userFileId from userFile where fileName= '"+fileName+"' ;";
     mysql_uploadFile::res_set=execute_query(mysql_uploadFile::connect_obj,query);
     unsigned int numrows =mysql_num_rows(mysql_uploadFile::res_set);
     int i=0;
@@ -40,8 +40,10 @@ vector<int> retrieveShaId(int fileId)
     mysql_uploadFile::res_set=execute_query(mysql_uploadFile::connect_obj,query);
     unsigned int numrows =mysql_num_rows(mysql_uploadFile::res_set);
     int i=0;
+    //cout<<"Retrieve"<<endl;
     if (numrows!=0)
     {
+        //cout<<"FOUND"<<endl;
         while (((mysql_uploadFile::row=mysql_fetch_row(mysql_uploadFile::res_set)) !=NULL))
         {
             arr.push_back(stoi(mysql_uploadFile::row[i]));
@@ -52,19 +54,14 @@ vector<int> retrieveShaId(int fileId)
 
 void upload(int fileId,string fileName)
 {
-    int n=1;
-    for(int i=0;i<n;i++)
-    {
-        fileLocation="file/"+fileName;
-        createChunk(fileId,fileLocation);
-        cout<<"--------------------------FILE "+to_string(i)+"--------------------------------------------"<<endl;
-    }
-    cout<<"Thank You: Files uploaded"<<endl;
+    fileLocation="file/"+fileName;
+    createChunk(fileId,fileLocation);
+    cout<<"Thank You :) File uploaded"<<endl;
 }
 void insertIntoFileTable(int FileId,string fileName )
 {
     string query;
-    vector<int> sha256Id=retriveshaID(FileId);
+    vector<int> sha256Id=retrieveShaId(FileId);
     for (int i: sha256Id)
     {
         query="insert into fileDetails values( "+to_string(FileId)+" , "+to_string(i)+" );";
@@ -74,7 +71,7 @@ void insertIntoFileTable(int FileId,string fileName )
 void insertVersionFileTable(int fileId)
 {
     string query;
-    vector<int> sha256Id=retriveshaID(fileId);
+    vector<int> sha256Id=retrieveShaId(fileId);
     for(int i: sha256Id)
     {
         query="insert into fileDetails values( "+to_string(fileId)+" , "+to_string(i)+" ) ;";
@@ -88,7 +85,8 @@ void insertIntoUserFile(int userId)
     cout<<"Enter the name of the file:- ";
     cin>>fileName;
     cout<<endl;
-    string query="insert into userFile (userId,fileName,versionNo) values( "+to_string(userId)+" , "+fileName+" , "+to_string(1)+" );";
+    string query="insert into userFile (userId,fileName,versionNo) values( "+to_string(userId)+" , '"+fileName+"' , "+to_string(1)+" );";
+    //cout<<query<<endl;
     execute_query(mysql_uploadFile::connect_obj,query);
     int fileID=retrieveFileId(fileName);
     query="update userFile set versionOf= "+to_string(fileID)+" where userFileId= "+to_string(fileID)+" ;";
