@@ -11,7 +11,7 @@ void createFile(int hash_val,string word, string hash256val)
     //string fileName=hash256val;
     fout.open(fileName);
     fout<<word;
-    cout<<"-----------------"<<endl;
+    //cout<<"-----------------"<<endl;
     fout.close();
 
 }
@@ -29,20 +29,20 @@ void createOriginal(vector<string> sha256,string fileName)
         {
             str1+=str;
         }
+        fin.close();
     }
-    fin.close();
     string finalname="download/"+fileName;
     fout.open(finalname);
     fout<<str1;
     fout.close();
 }
-void deleteFile(string shaValue)
+void deletefile(string shaValue)
 {
     string fileName="chunks/"+shaValue;
-    if(remove(fileName.c_str()))
-        cout<<"File Deleted Sucessfully"<<endl;
+    if(remove(fileName.c_str())==0)
+        cout<<"File "+shaValue+" Deleted Sucessfully"<<endl;
     else 
-        cout<<"File Deletion Failed"<<endl;
+        cout<<"File "+shaValue+" Deletion Failed"<<endl;
 }
 #endif
 /*
