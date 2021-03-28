@@ -42,6 +42,7 @@ void deleteFile(int userId)
     {
         if(mapCountFile.find(i)!=mapCountFile.end())
         {
+            int count=mapCountFile.find(i)->second;
             if(count<=1)
             {
                 string query="delete from shaTable where sha256Value= '"+i+"' ;";
