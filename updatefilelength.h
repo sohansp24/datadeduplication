@@ -22,7 +22,7 @@ void LengthOfOriginalFile(int fileId,string FileName)
         long begin=fin.tellg();
         fin.seekg(0,ios::end);
         long end=fin.tellg();
-        filesize=(end-begin)/1024;
+        filesize=(end-begin);
     }
     string query="update userFile set fileSize= "+to_string(filesize+1) +" where userFileId= "+to_string(fileId)+" ;";
     execute_query(mysql_filelen::connect_obj,query);
@@ -32,18 +32,19 @@ void LengthOfChunkFile(vector<string> sha256list)
 {
     ifstream fin;
     string fileLocation="";
-    long filelen=0;
+    int filelen;
     for (string i:sha256list)
     {
+        cout<<i<<endl;
         fileLocation="chunks/"+i;
         fin.open(fileLocation);
+        //cout<<fin;
         if (fin)
         {
-            long begin=fin.tellg();
             fin.seekg(0,ios::end);
-            long end=fin.tellg();
-            filelen=(end-begin)/1024;
-            string query="update hashTable set chunkSize= "+to_string(filelen+1)+ " where sha256= "+i+" ;";
+            filelen=fin.tellg();
+            cout<<"Length"<<filelen;
+            string query="update hashTable set chunkSize= "+to_string(filelen+1)+ " where sha256= '"+i+"' ;";
         }
         else
             cout<<"File not found"<<endl;
