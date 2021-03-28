@@ -38,7 +38,7 @@ int inithash()
         fin.read(&d,1);
         c=(int)d;
         //cout<<d<<"  "<<c<<"\t";
-        cout<<"INIT:- "<<bufferptr;
+        //cout<<"INIT:- "<<bufferptr;
         string_w+=d;
         buffer[bufferptr]=c;
         bufferptr++;
@@ -54,6 +54,7 @@ int inithash()
         st += to_string(i);
     }
     cout<<st<<"\n";*/
+    //cout<<"INIT STRING"<<string_w;
 	return hash ;
 }
 
@@ -78,7 +79,7 @@ int nexthash(int prevhash)
         st += to_string(i);
     }
     cout<<st<<endl;*/
-    cout<<"Next:- "<<bufferptr;
+    //cout<<"Next:- "<<bufferptr;
 	return prevhash;
 }
 void getShaCount()
@@ -124,8 +125,7 @@ void createChunk(int fileId,string fileLocation)
     fin.seekg (0,ios::beg);
     long hash=inithash();
     cout<<"* INT Hash:-\t"<<hash<<endl;
-    int curr=size;
-    curr-=fin.gcount()*1024;
+    int curr=fin.gcount()*1024;
     //cout<<fin.gcount();
     //curr-=tmp_size;
     //cout<<curr<<"  "<<size<<endl;
@@ -133,6 +133,7 @@ void createChunk(int fileId,string fileLocation)
     //int j=0;
     //ofstream fout;
     //fout.open("testing.txt",ios_base::app);
+    int flag;
     while(curr<size)
     {
         //fout<<string_w;
@@ -140,46 +141,51 @@ void createChunk(int fileId,string fileLocation)
         {
             //cout<<"----";
             string hashIn256=sha256(string_w);
-            cout<<string_w<<endl;
-            cout<<curr<<"    "<<(hash & mask);
-            cout<<"Hash Value  "<<hashIn256<<endl;
-            cout<<"if iffff";
+            //cout<<string_w<<endl;
+            //cout<<curr<<"    "<<(hash & mask);
+            //cout<<"Hash Value  "<<hashIn256<<endl;
+            //cout<<"if iffff";
             array_of_file_sha.push_back(hashIn256);
-            cout<<"-----";
+            //cout<<"-----";
             string ID=to_string(fileId);
             string has=to_string(hash);
-            cout<<"In if";
-            vector<string> it=map1.find(hash)->second;
+            //cout<<"In if";
             //cout<<"----------";
+            flag=0;
             if(map1.find(hash)==map1.end())
             {
+                flag=1;
                 map1.insert(make_pair(hash,(vector<string>){hashIn256}));
                 //MYSQL_RES* mysql_createchunk::res_set;
                 string query="Insert into hashTable (userFileId,rollHash,sha256) values ('"+ID+"','"+has+"','"+hashIn256+"')";
                 execute_query(mysql_createchunk::connect_obj,query);
                 createFile(hash,string_w,hashIn256);
             }
-            else if(find(it.begin(),it.end(),hashIn256)==it.end())
+            vector<string> it=map1.find(hash)->second;
+            if((find(it.begin(),it.end(),hashIn256)==it.end()) && flag==0)
             {
-                cout<<"------";
+                flag=1;
+                //cout<<"------";
                 map1.find(hash)->second.push_back(hashIn256);
                 string query="Insert into hashTable (userFileId,rollHash,sha256) values ('"+ID+"','"+has+"','"+hashIn256+"')";
                 execute_query(mysql_createchunk::connect_obj,query);
                 createFile(hash,string_w,hashIn256);
             }
-            else
+            if(flag==0)
             {
-                cout<<counter++<<"=> YES hash\tYES 256\t"<<"  =>  "<<has<<"\tsha256\t"<<hashIn256;
+                cout<<counter++<<"=> YES hash\tYES 256\t"<<"  =>  "<<has<<"\tsha256\t"<<hashIn256<<endl;
             }
             string_w="";
         }
         hash = nexthash(hash);
         //cout<<fin.gcount()*1024<<"    "<<curr<<endl;
         //cout<<"\t"<<curr++;
+
         curr++;
+        //cout<<"curr"<<curr;
     }
     //fout.close();
-    cout<<"=====";
+    //cout<<"=====";
     //str.clear();
     //copy(array_of_file_sha.begin(), array_of_file_sha.end()-1,std::ostream_iterator<string>(str, ","));
     //str << array_of_file_sha.back();
@@ -187,17 +193,21 @@ void createChunk(int fileId,string fileLocation)
     getShaCount();
     for(string s: array_of_file_sha)
     {
-        cout<<" --   ";
+        //cout<<" --   ";
         bool res=isAvailSha(s);
+        //cout<<"Res"<<res<<endl;
         string query;
-        if(res)
+        if(res==true)
         {
             int count=map4count.find(s)->second;
-            query="update shaTable set shacount "+to_string(count)+" where sha256Value ="+s+";";
+            query="update shaTable set shacount= "+to_string(++count)+" where sha256Value = '"+s+"';";
+            execute_query(mysql_createchunk::connect_obj,query);
         }
         else
-            query="Insert into shaTable values ("+s+",1);";
-        execute_query(mysql_createchunk::connect_obj,query);
+        {            
+            query="Insert into shaTable values ('"+s+"',1);";
+            execute_query(mysql_createchunk::connect_obj,query);
+        }
     }
     array_of_file_sha.clear();
 }
