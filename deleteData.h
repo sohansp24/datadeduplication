@@ -34,6 +34,7 @@ void deleteFile(int userId)
         int i=0;
         while (((mysql_delete::row=mysql_fetch_row(mysql_delete::res_set)) !=NULL))
         {   
+               cout<<mysql_delete::row[1];
                mapCountFile.insert(make_pair(mysql_delete::row[i],stoi(mysql_delete::row[i+1])));
         }
     }
@@ -41,7 +42,6 @@ void deleteFile(int userId)
     {
         if(mapCountFile.find(i)!=mapCountFile.end())
         {
-            int count=mapCountFile.find(i)->second;
             if(count<=1)
             {
                 string query="delete from shaTable where sha256Value= '"+i+"' ;";
