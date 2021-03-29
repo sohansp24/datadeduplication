@@ -45,6 +45,7 @@ void LengthOfChunkFile(vector<string> sha256list)
             filelen=fin.tellg();
             cout<<"Length"<<filelen;
             string query="update hashTable set chunkSize= "+to_string(filelen+1)+ " where sha256= '"+i+"' ;";
+            execute_query(mysql_filelen::connect_obj,query);
         }
         else
             cout<<"File not found"<<endl;
