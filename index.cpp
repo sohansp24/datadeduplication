@@ -1,6 +1,12 @@
 #include<bits/stdc++.h>
 #include<mysql/mysql.h>
 #include "sql_handler.h"
+#include "file_opr.h"
+#include "downloadFile.h"
+#include "uploadFile.h"
+#include "deleteData.h"
+#include "updateFile.h"
+
 namespace mysql_main
 {
     MYSQL * connect_obj=connect();
@@ -9,30 +15,31 @@ namespace mysql_main
 }
 using namespace std;
 
-void userMenu(int UserID, string username)
+void userMenu(int UserId, string username)
 {
+    while(true){
     cout<<"Welcome "+ username + "\n** Please Select a option **\n\t1. Upload File\n\t2. Download File\n\t3. Delete File\n\t4. Delete Version\n\t5. Delete User\n\t6. updateFile\n\t7. Exit"<<endl;
     int ch;
     cin>>ch;
     switch(ch)
     {
         case 1:
-            //insertIntoUserFile(userId);
+            insertIntoUserFile(UserId);
             break;
         case 2:
-            //download(userId);
+            DownloadFile(UserId);
             break;
         case 3:
-            //deleteFile(userId);
+            deleteFile(UserId);
             break;
         case 4:
-            //deleteVersion(userId);
+            deleteVersion(UserId);
             break;
         case 5:
-            //deleteUser(userId);
+            deleteUser(UserId);
             break;
         case 6:
-            //update(userId);
+            update(UserId);
             break;
         case 7:
             cout<<"Bye..."<<endl;
@@ -40,6 +47,7 @@ void userMenu(int UserID, string username)
         default:
             cout<<"Invalid Input"<<endl;
             break;
+    }
     }
 }
 
@@ -89,3 +97,4 @@ int main(int argc, char const *argv[])
     mysql_close (mysql_main::connect_obj);
     return 0;
 }
+
