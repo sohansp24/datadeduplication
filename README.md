@@ -4,8 +4,8 @@ Three directories needed to be created  in parent directory for execution:
 2) download 
 3) file<br>
 
-*Directory names are case sensitive<br>
-*Change mysql username and password in sql_handler.h to what you've setup during MySQL installation in your PC<br>
+<I>Directory names are case sensitive<br>
+Change mysql username and password in sql_handler.h to what you've setup during MySQL installation in your PC<br></I>
 <b> How to run this program: (For LINUX based systems only) </b><br>
 <ul>
   <li>
