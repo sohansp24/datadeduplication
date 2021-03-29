@@ -37,8 +37,11 @@ MYSQL_RES* execute_query(MYSQL* connect, string query)
     string error;
     error=mysql_error(connect);
     if (error.length()>0)
+    {
         //cout<<error.length();
         cout<<"** ERROR:   "<<error<<endl;
+        cout<<"Error in SQL Query: "<<query<<endl;
+    }
     return res_set;
 }
 void show_result(MYSQL_RES * res_set)
