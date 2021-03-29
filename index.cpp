@@ -17,37 +17,39 @@ using namespace std;
 
 void userMenu(int UserId, string username)
 {
-    while(true){
-    cout<<"Welcome "+ username + "\n** Please Select a option **\n\t1. Upload File\n\t2. Download File\n\t3. Delete File\n\t4. Delete Version\n\t5. Delete User\n\t6. updateFile\n\t7. Exit"<<endl;
-    int ch;
-    cin>>ch;
-    switch(ch)
+    while(true)
     {
-        case 1:
-            insertIntoUserFile(UserId);
-            break;
-        case 2:
-            DownloadFile(UserId);
-            break;
-        case 3:
-            deleteFile(UserId);
-            break;
-        case 4:
-            deleteVersion(UserId);
-            break;
-        case 5:
-            deleteUser(UserId);
-            break;
-        case 6:
-            update(UserId);
-            break;
-        case 7:
-            cout<<"Bye..."<<endl;
-            break;
-        default:
-            cout<<"Invalid Input"<<endl;
-            break;
-    }
+        cout<<"Welcome "+ username + "\n** Please Select a option **\n\t1. Upload File\n\t2. Download File\n\t3. Delete File\n\t4. Delete Version\n\t5. Delete User\n\t6. updateFile\n\t7. Exit"<<endl;
+        int ch;
+        cin>>ch;
+        switch(ch)
+        {
+            case 1:
+                insertIntoUserFile(UserId);
+                break;
+            case 2:
+                DownloadFile(UserId);
+                break;
+            case 3:
+                deleteFile(UserId);
+                break;
+            case 4:
+                deleteVersion(UserId);
+                break;
+            case 5:
+                deleteUser(UserId);
+                break;
+            case 6:
+                update(UserId);
+                break;
+            case 7:
+                cout<<"Bye..."<<endl;
+                exit(0);
+                break;
+            default:
+                cout<<"Invalid Input\nTry Again....."<<endl;
+                break;
+        }
     }
 }
 
