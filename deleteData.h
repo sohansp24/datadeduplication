@@ -105,6 +105,8 @@ void deleteUser(int userId)
             execute_query(mysql_delete::connect_obj,query);
         }
     }
+    cout<<"User deleted"<<endl;
+    exit(0);
 }
 void deleteVersion(int userId)
 {
