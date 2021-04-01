@@ -22,7 +22,6 @@ vector<int> retriveshaID(int fileID)
     unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
     if (numrows!=0)
     {
-        cout<<"FOUND"<<endl;
         while (((mysql_retrieve::row=mysql_fetch_row(mysql_retrieve::res_set)) !=NULL))
         {
             arr.push_back(stoi(mysql_retrieve::row[i]));
@@ -81,12 +80,15 @@ int showFiles(int UserId)
         {
             cout<<mysql_retrieve::row[i]<<"\t"<<mysql_retrieve::row[i+1]<<endl;
         }
+        cout<<"Enter FileID: ";
+        int fileid;
+        cin>>fileid;
+        cout<<endl;
+        return fileid;
     }
-    cout<<"Enter FileID: ";
-    int fileid;
-    cin>>fileid;
-    cout<<endl;
-    return fileid;
+    else
+        cout<<"You don't have any files uploaded...\nTry uploading a file and then come back here..."<<endl;
+    return -1;
 }
 
 string showFilesName(int fileId)
@@ -111,6 +113,7 @@ vector<int> retrieveAllFileId(int userId)
     string query="select userFileId from userFile where userId= "+to_string(userId)+" ;";
     vector<int> allFileId;
     int i=0;
+    mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
     unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
     if (numrows!=0)
     {
