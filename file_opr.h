@@ -24,10 +24,10 @@ void createOriginal(vector<string> sha256,string fileName)
     for(string i: sha256)
     {
         string chunkname="chunks/"+i;
-        fin.open(chunkname);
+        fin.open(chunkname,ios::binary);
         while ( getline (fin,str) )
         {
-            str1+=str;
+            str1+=(str+"\n");
         }
         fin.close();
     }

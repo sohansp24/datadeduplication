@@ -34,6 +34,7 @@ void deleteFile(int userId)
         if (numrows!=0)
         {
             int i=0;
+            mapCountFile.clear();
             while (((mysql_delete::row=mysql_fetch_row(mysql_delete::res_set)) !=NULL))
                 mapCountFile.insert(make_pair(mysql_delete::row[i],stoi(mysql_delete::row[i+1])));
         }
@@ -42,6 +43,7 @@ void deleteFile(int userId)
             if(mapCountFile.find(i)!=mapCountFile.end())
             {
                 int count=mapCountFile.find(i)->second;
+                //cout<<i<<" "<<count<<endl;
                 if(count==1)
                 {
                     string query="delete from shaTable where sha256Value= '"+i+"' ;";
@@ -51,6 +53,7 @@ void deleteFile(int userId)
                 else
                 {
                     string query="update shaTable set shacount= "+to_string(--count)+" where sha256Value= '"+i+"' ;";
+                    cout<<query<<endl;
                     execute_query(mysql_delete::connect_obj,query);
                 }
             }
@@ -79,6 +82,7 @@ void deleteUser(int userId)
     int i=0;
     if (numrows!=0)
     {
+        mapCountUser.clear();
         while (((mysql_delete::row=mysql_fetch_row(mysql_delete::res_set)) !=NULL))
         {
             mapCountUser.insert(make_pair(mysql_delete::row[i],stoi(mysql_delete::row[i+1])));
@@ -91,6 +95,7 @@ void deleteUser(int userId)
         if (count==1)
         {
             query="delete from shaTable where sha256Value= "+s+" ;";
+            map4count.erase(map4count.find(s));
             execute_query(mysql_delete::connect_obj,query);
         }
         else
@@ -141,7 +146,7 @@ void deleteVersion(int userId)
         if(mapCountFile.find(i)!=mapCountFile.end())
         {
             int count=mapCountFile.find(i)->second;
-            if(count<=1)
+            if(count==1)
             {
                 query="delete from shaTable where sha256Value= "+i+" ;";
                 execute_query(mysql_delete::connect_obj,query);

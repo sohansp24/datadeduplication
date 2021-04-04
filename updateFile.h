@@ -43,12 +43,14 @@ void update(int userId)
         tm *ltm=localtime(&now);
         string current_datentime=to_string(ltm->tm_mday)+"-"+to_string(1+ltm->tm_mon) +"-"+to_string(1900+ltm->tm_year)+"|"+to_string(5+ltm->tm_hour)+":"+to_string(30+ ltm->tm_hour)+":"+to_string(ltm->tm_sec);
         vector<string> tokens;
-        char *token = strtok((char*)filename.c_str(), "\\"); 
+        char *token = strtok((char*)filename.c_str(), "."); 
         tokens.push_back((string)token);
+        cout<<token<<"  ";
         while (token != NULL) 
         { 
             tokens.push_back((string)token);
-            token = strtok(NULL, "\\"); 
+            token = strtok(NULL, "."); 
+            //cout<<token;
         }  
         /*char* intermediate;
         char name[filename.length()];
@@ -60,6 +62,7 @@ void update(int userId)
             intermediate = strtok (NULL, "//");
         }*/
         string newFileName=tokens.at(0)+"_"+current_datentime+"."+tokens.at(1);
+        cout<<tokens.at(0)<<"\t"<<tokens.at(1)<<"\t"<<tokens.size();
         versionCount=versionNo+1;
         string query="insert into userFile (userId,fileName,versionNo,versionOf) values ("+to_string(userId)+",'"+newFileName+"',"+to_string(versionCount)+","+to_string(fileId)+");";
         execute_query(mysql_updatefile::connect_obj,query);

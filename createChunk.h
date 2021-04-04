@@ -87,10 +87,10 @@ void getShaCount()
     string query="select * from shaTable;";
     mysql_createchunk::res_set=execute_query(mysql_createchunk::connect_obj,query);
     unsigned int numrows = mysql_num_rows(mysql_createchunk::res_set);
-    int i=0;
+    map4count.clear();
     if(numrows==0)
     {
-        cout<<"Empty"<<endl;
+        cout<<"SHA Table Empty"<<endl;
     }
     else
     {
@@ -173,7 +173,9 @@ void createChunk(int fileId,string fileLocation)
             }
             if(flag==0)
             {
-                cout<<counter++<<"=> YES hash\tYES 256\t"<<"  =>  "<<has<<"\tsha256\t"<<hashIn256<<endl;
+                cout<<counter++<<" => YES hash\tYES 256\t"<<"  =>  "<<has<<"\tsha256\t"<<hashIn256<<endl;
+                string query="Insert into hashTable (userFileId,rollHash,sha256) values ('"+ID+"','"+has+"','"+hashIn256+"')";
+                execute_query(mysql_createchunk::connect_obj,query);
             }
             string_w="";
         }

@@ -17,39 +17,38 @@ using namespace std;
 
 void userMenu(int UserId, string username)
 {
-    while(true)
+    while(true){
+    //cout<<"Welcome "+ username + "\n** Please Select a option **\n\t1. Upload File\n\t2. Download File\n\t3. Delete File\n\t4. Delete Version\n\t5. Delete User\n\t6. Update File\n\t7. Exit"<<endl;
+    int ch;
+    cin>>ch;
+    switch(ch)
     {
-        cout<<"Welcome "+ username + "\n** Please Select a option **\n\t1. Upload File\n\t2. Download File\n\t3. Delete File\n\t4. Delete Version\n\t5. Delete User\n\t6. updateFile\n\t7. Exit"<<endl;
-        int ch;
-        cin>>ch;
-        switch(ch)
-        {
-            case 1:
-                insertIntoUserFile(UserId);
-                break;
-            case 2:
-                DownloadFile(UserId);
-                break;
-            case 3:
-                deleteFile(UserId);
-                break;
-            case 4:
-                deleteVersion(UserId);
-                break;
-            case 5:
-                deleteUser(UserId);
-                break;
-            case 6:
-                update(UserId);
-                break;
-            case 7:
-                cout<<"Bye..."<<endl;
-                exit(0);
-                break;
-            default:
-                cout<<"Invalid Input\nTry Again....."<<endl;
-                break;
-        }
+        case 1:
+            insertIntoUserFile(UserId);
+            break;
+        case 2:
+            DownloadFile(UserId);
+            break;
+        case 3:
+            deleteFile(UserId);
+            break;
+        case 4:
+            deleteVersion(UserId);
+            break;
+        case 5:
+            deleteUser(UserId);
+            break;
+        case 6:
+            update(UserId);
+            break;
+        case 7:
+            cout<<"Bye..."<<endl;
+            exit(0);
+            break;
+        default:
+            cout<<"Invalid Input"<<endl;
+            break;
+    }
     }
 }
 
@@ -93,10 +92,9 @@ int main(int argc, char const *argv[])
         cout<<"Enter Email ID: ";
         cin>>email;
         string query="insert into userTable(userName,passwords,emailID) values('"+username+"','"+password+"','"+email+"');";
-        cout<<query<<endl;
+        //cout<<query<<endl;
         mysql_main::res_set =execute_query(mysql_main::connect_obj,query);
     }
     mysql_close (mysql_main::connect_obj);
     return 0;
 }
-

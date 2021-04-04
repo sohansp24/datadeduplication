@@ -13,7 +13,7 @@ namespace mysql_filelen
 using namespace std;
 void LengthOfOriginalFile(int fileId,string FileName)
 {
-    string location="File/"+FileName;
+    string location="file/"+FileName;
     ifstream fin;
     long filesize=0;
     if(fin)
@@ -35,7 +35,7 @@ void LengthOfChunkFile(vector<string> sha256list)
     int filelen;
     for (string i:sha256list)
     {
-        cout<<i<<endl;
+        //cout<<i<<endl;
         fileLocation="chunks/"+i;
         fin.open(fileLocation);
         //cout<<fin;
@@ -43,7 +43,7 @@ void LengthOfChunkFile(vector<string> sha256list)
         {
             fin.seekg(0,ios::end);
             filelen=fin.tellg();
-            cout<<"Length"<<filelen;
+            //cout<<"Length"<<filelen;
             string query="update hashTable set chunkSize= "+to_string(filelen+1)+ " where sha256= '"+i+"' ;";
             execute_query(mysql_filelen::connect_obj,query);
         }

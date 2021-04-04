@@ -12,7 +12,6 @@ namespace mysql_retrieve
     MYSQL_ROW row;
 }
 using namespace std;
-unordered_map <string,int> countmap;
 vector<int> retriveshaID(int fileID)
 {
     vector<int> arr;
