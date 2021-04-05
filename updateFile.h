@@ -36,16 +36,16 @@ void update(int userId)
     cout<<endl;
     int fileId=retrieveFileId(userId,filename);
     int versionNo=retrieveVersionNo(fileId);
-    string newFileLocation="File/"+filename;
+    string newFileLocation="file/"+filename;
     if(checkFileName(userId,filename))
     {
         time_t now=time(0);
         tm *ltm=localtime(&now);
-        string current_datentime=to_string(ltm->tm_mday)+"-"+to_string(1+ltm->tm_mon) +"-"+to_string(1900+ltm->tm_year)+"|"+to_string(5+ltm->tm_hour)+":"+to_string(30+ ltm->tm_hour)+":"+to_string(ltm->tm_sec);
+        string current_datentime=to_string(ltm->tm_mday)+"-"+to_string(1+ltm->tm_mon) +"-"+to_string(1900+ltm->tm_year)+"|"+to_string(ltm->tm_hour)+":"+to_string(ltm->tm_min)+":"+to_string(ltm->tm_sec);
         vector<string> tokens;
         char *token = strtok((char*)filename.c_str(), "."); 
-        tokens.push_back((string)token);
-        cout<<token<<"  ";
+        //tokens.push_back((string)token);
+        //cout<<token<<"  ";
         while (token != NULL) 
         { 
             tokens.push_back((string)token);
@@ -62,18 +62,19 @@ void update(int userId)
             intermediate = strtok (NULL, "//");
         }*/
         string newFileName=tokens.at(0)+"_"+current_datentime+"."+tokens.at(1);
-        cout<<tokens.at(0)<<"\t"<<tokens.at(1)<<"\t"<<tokens.size();
+        //cout<<tokens.at(0)<<"\t"<<tokens.at(1)<<"\t"<<tokens.size();
         versionCount=versionNo+1;
         string query="insert into userFile (userId,fileName,versionNo,versionOf) values ("+to_string(userId)+",'"+newFileName+"',"+to_string(versionCount)+","+to_string(fileId)+");";
         execute_query(mysql_updatefile::connect_obj,query);
         int versionId=retrieveVersionId(fileId,versionCount);
         createChunk(versionId,newFileLocation);
-        cout<<versionId<<endl;
+        //cout<<versionId<<endl;
         insertVersionFileTable(versionId);
         LengthOfOriginalFile(versionId,filename);
-        cout<<versionId<<endl;
+        //cout<<versionId<<endl;
         vector <string> shaValue=retrieveShaValue(versionId);
         LengthOfChunkFile(shaValue);
+        cout<<"Thank You :) File updated"<<endl;
     }
     else
         cout<<"File not found"<<endl;
