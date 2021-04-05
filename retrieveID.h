@@ -123,7 +123,29 @@ vector<int> retrieveAllFileId(int userId)
     }
     return allFileId;
 }
-
+unordered_map<int,vector<string>> retrieveMap()
+{
+    unordered_map<int,vector<string>> tempMap;
+    string query="select rollHash, sha256 from hashTable;";
+    int i=0;
+    mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
+    unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
+    if (numrows!=0)
+    {
+        while (((mysql_retrieve::row=mysql_fetch_row(mysql_retrieve::res_set)) !=NULL))
+        {
+            int hash=stoi(mysql_retrieve::row[i]);
+            string sha=mysql_retrieve::row[i+1];
+            if(tempMap.find(hash)==tempMap.end())
+                tempMap.insert(make_pair(hash,(vector<string>){sha}));
+            else
+                tempMap.find(hash)->second.push_back(sha);
+        }
+    }
+    else
+        cout<<"Hash Table Empty"<<endl;
+    return tempMap;
+}
 vector<string> retrieveAllShaValue(int userId)
 {
     vector<string> allShaValues;

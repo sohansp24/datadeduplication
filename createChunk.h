@@ -5,6 +5,7 @@
 #include<mysql/mysql.h>
 #include<fstream>
 #include<vector>
+#include "retrieveID.h"
 #include "sql_handler.h"
 #include "sha256_main.h"
 #include "file_opr.h"
@@ -57,7 +58,6 @@ int inithash()
     //cout<<"INIT STRING"<<string_w;
 	return hash ;
 }
-
 int nexthash(int prevhash)
 {
     int c;
@@ -112,6 +112,8 @@ bool isAvailSha(string hashIn256)
 void createChunk(int fileId,string fileLocation)
 {
     //array_of_file_sha.reserve(200);
+    map1.clear();
+    map1=retrieveMap();
     int mask=1<<13;
     mult=1;
     bufferptr=0;
@@ -134,7 +136,7 @@ void createChunk(int fileId,string fileLocation)
     //ofstream fout;
     //fout.open("testing.txt",ios_base::app);
     int flag;
-    while(curr<size)
+    while(curr<=size)
     {
         //fout<<string_w;
         if ((hash & mask)==0 || curr==size-1)

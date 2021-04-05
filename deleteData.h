@@ -53,7 +53,7 @@ void deleteFile(int userId)
                 else
                 {
                     string query="update shaTable set shacount= "+to_string(--count)+" where sha256Value= '"+i+"' ;";
-                    cout<<query<<endl;
+                    //cout<<query<<endl;
                     execute_query(mysql_delete::connect_obj,query);
                 }
             }

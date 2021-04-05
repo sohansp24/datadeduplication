@@ -18,7 +18,7 @@ using namespace std;
 void userMenu(int UserId, string username)
 {
     while(true){
-    //cout<<"Welcome "+ username + "\n** Please Select a option **\n\t1. Upload File\n\t2. Download File\n\t3. Delete File\n\t4. Delete Version\n\t5. Delete User\n\t6. Update File\n\t7. Exit"<<endl;
+    cout<<"Welcome "+ username + "\n** Please Select a option **\n\t1. Upload File\n\t2. Download File\n\t3. Delete File\n\t4. Delete Version\n\t5. Delete User\n\t6. Update File\n\t7. Exit"<<endl;
     int ch;
     cin>>ch;
     switch(ch)
