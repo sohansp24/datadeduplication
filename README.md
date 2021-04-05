@@ -10,5 +10,9 @@ Change mysql username and password in sql_handler.h to what you've setup during 
 <ul>
 <li>First navigate to the folder to which you've  downloaded and extracted the code</li><br>
 <li>Run the following commands in Linux Terminal</li><br></ul>
-1.  g++ -o index index.cpp -L/usr/include/mysql -lmysqlclient -I/usr/include/mysql <br><br>
-2.  ./index
+<ol>
+  <li><code>g++ -o index index.cpp -L/usr/include/mysql -lmysqlclient -I/usr/include/mysql</code></li>
+  <br><br>
+  <li><code>./index</code></li>
+</ol>
+
