@@ -212,9 +212,10 @@ int showFileVersion(int fileId)
     {
         while (((mysql_retrieve::row=mysql_fetch_row(mysql_retrieve::res_set)) !=NULL))
         {
-            cout<<mysql_retrieve::row[i]<<"\t"<<mysql_retrieve::row[i+1];
+            cout<<mysql_retrieve::row[i+1]<<"\t\t"<<mysql_retrieve::row[i]<<endl;
         }
     }
+    cout<<endl;
     int temp;
     cout<<"Enter the Version number to delete: ";
     cin>>temp;
