@@ -64,6 +64,7 @@ void deleteFile(int userId)
         }
         query="delete from hashTable where userFileId= "+to_string(fileId)+" ;";
         execute_query(mysql_delete::connect_obj,query); 
+        cout<<"File Deleted"<<endl;
     }
 }
 void deleteUser(int userId)
@@ -160,5 +161,6 @@ void deleteVersion(int userId)
             execute_query(mysql_delete::connect_obj,query);
         }
     }
+    cout<<"Version of the "<<fileName<<" has been deleted"<<endl;
 }
 #endif
