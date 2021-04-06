@@ -18,11 +18,9 @@ Change mysql username and password in sql_handler.h (line no. 17) to what you've
   <br>
   <li><code>./index</code></li>
 </ol>
-**If you are getting Database connection failed message**<br>
+<b>If you are getting Database connection failed message</b><br>
 Execute the following command in Linux Terminal<br>
 <code>sudo systemctl start mysqld</code><br>
 Enter password if prompted
 and  again execute <code>./index</code> <br>
-**If you are still getting Database connection failed message 
-then 
-Change mysql username and password in sql_handler.h (line no. 17) to what you've setup during MySQL installation in your PC **<br>
+<b>If you are still getting Database connection failed message then Change mysql username and password in sql_handler.h (line no. 17) to what you've setup during MySQL installation in your PC</b><br>
