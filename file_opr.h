@@ -9,7 +9,7 @@ void createFile(int hash_val,string word, string hash256val)
     //ifstream fin;
     string fileName = "chunks/"+hash256val;
     //string fileName=hash256val;
-    fout.open(fileName);
+    fout.open(fileName,ios::binary);
     fout<<word;
     //cout<<"-----------------"<<endl;
     fout.close();
@@ -32,7 +32,7 @@ void createOriginal(vector<string> sha256,string fileName)
         fin.close();
     }
     string finalname="download/"+fileName;
-    fout.open(finalname);
+    fout.open(finalname,ios::binary);
     fout<<str1;
     fout.close();
 }

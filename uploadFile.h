@@ -3,6 +3,7 @@
 #include<bits/stdc++.h>
 #include<unordered_map>
 #include<mysql/mysql.h>
+#include<fstream>
 #include "sql_handler.h"
 #include "file_opr.h"
 #include "updatefilelength.h"
@@ -85,6 +86,14 @@ void insertIntoUserFile(int userId)
     cout<<"Enter the name of the file:- ";
     cin>>fileName;
     cout<<endl;
+    ifstream fin;
+    string location="file/"+fileName;
+    fin.open(location);
+    if(!fin.is_open())
+    {
+        cout<<"File not found..\nCheck whether you've entered correct filename.."<<endl;
+        return;
+    }
     string query="insert into userFile (userId,fileName,versionNo) values( "+to_string(userId)+" , '"+fileName+"' , "+to_string(1)+" );";
     //cout<<query<<endl;
     execute_query(mysql_uploadFile::connect_obj,query);

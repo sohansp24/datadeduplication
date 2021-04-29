@@ -95,13 +95,13 @@ void deleteUser(int userId)
         cout<<s<<"::"<<count<<endl;
         if (count==1)
         {
-            query="delete from shaTable where sha256Value= "+s+" ;";
-            map4count.erase(map4count.find(s));
+            query="delete from shaTable where sha256Value= '"+s+"' ;";
+            map4count.erase(s);
             execute_query(mysql_delete::connect_obj,query);
         }
         else
         {
-            query="update shaTable set shacount = "+to_string(--count)+" where sha256Value = "+s+" ;";
+            query="update shaTable set shacount = "+to_string(--count)+" where sha256Value = '"+s+"' ;";
             execute_query(mysql_delete::connect_obj,query);
             mapCountUser.insert(make_pair(s,--(mapCountUser.find(s)->second)));
         }

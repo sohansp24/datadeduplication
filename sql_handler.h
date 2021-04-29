@@ -16,10 +16,7 @@ MYSQL* connect()
     }
     connect = mysql_real_connect(connect, "localhost", "admin", "123456", "project", 0,NULL,0);
     if(connect)
-    {
-        cout<<"Database connection Sucessfull"<<endl;
         return connect;
-    }
     else
     {
         cout<<"Database connection failed"<<endl;

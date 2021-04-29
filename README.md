@@ -1,5 +1,5 @@
 # DataDeduplication
-Three directories needed to be created  in parent directory for execution: (if you are downaloding zip from GitHub or cloing the repo then this step is not necessary)
+Three directories needed to be created  in parent directory for execution: (if you are downloading zip from GitHub or cloning the repo then this step is not necessary)
 1)  chunks
 2)  download 
 3)  file<br>
@@ -24,3 +24,4 @@ Execute the following command in Linux Terminal<br>
 Enter password if prompted
 and  again execute <code>./index</code> <br>
 <b>If you are still getting Database connection failed message then Change mysql username and password in sql_handler.h (line no. 17) to what you've setup during MySQL installation in your PC</b><br>
+<b>Note: </b>While uploading a file please use the same filenames contained in <I>file</I> directory. If you want to upload your own file, then copy first it in <I>file</I> directory and then enter filename while execution of the project
