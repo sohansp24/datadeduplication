@@ -23,5 +23,10 @@ Execute the following command in Linux Terminal<br>
 <code>sudo systemctl start mysqld</code><br>
 Enter password if prompted
 and  again execute <code>./index</code> <br>
-<b>If you are still getting Database connection failed message then Change mysql username and password in sql_handler.h (line no. 17) to what you've setup during MySQL installation in your PC</b><br>
-<b>Note: </b>While uploading a file please use the same filenames contained in <I>file</I> directory. If you want to upload your own file, then copy first it in <I>file</I> directory and then enter filename while execution of the project
+<b>If you are still getting Database connection failed message then Change mysql username and password in sql_handler.h (line no. 17) to what you've setup during MySQL installation in your PC</b><br><br>
+<b>Note: </b>
+<ul>
+<li>While uploading a file please use the same filenames contained in <I>file</I> directory. If you want to upload your own file, then copy first it in <I>file</I> directory and then enter filename while execution of the project</li>
+<li>Downloaded file will be stored in <I>download</I> directory</li>
+<li>Chunks generated after uploading a file will be stored in <I>chunks</I> directory</li>
+</ul>

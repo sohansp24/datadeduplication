@@ -215,6 +215,7 @@ void createChunk(int fileId,string fileLocation)
     }
     array_of_file_sha.clear();
     fin.close();
+    tempfin.close();
 }
 #endif
 /*

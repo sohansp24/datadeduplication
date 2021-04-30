@@ -11,6 +11,7 @@ void createFile(int hash_val,string word, string hash256val)
     //string fileName=hash256val;
     fout.open(fileName,ios::binary);
     fout<<word;
+    fout.flush();
     //cout<<"-----------------"<<endl;
     fout.close();
 
@@ -20,20 +21,22 @@ void createOriginal(vector<string> sha256,string fileName)
     ofstream fout;
     ifstream fin;
     string str;
-    string str1="";
+    string str1;
+    string finalname="download/"+fileName;
+    fout.open(finalname,ios::binary);
     for(string i: sha256)
     {
+        str1="";
         string chunkname="chunks/"+i;
         fin.open(chunkname,ios::binary);
         while ( getline (fin,str) )
         {
             str1+=(str+"\n");
         }
+        fout<<str1;
         fin.close();
-    }
-    string finalname="download/"+fileName;
-    fout.open(finalname,ios::binary);
-    fout<<str1;
+    } 
+    fout.flush();
     fout.close();
 }
 void deletefile(string shaValue)

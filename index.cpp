@@ -92,8 +92,8 @@ int main(int argc, char const *argv[])
         cout<<"Enter Email ID: ";
         cin>>email;
         string query="insert into userTable(userName,passwords,emailID) values('"+username+"','"+password+"','"+email+"');";
-        //cout<<query<<endl;
         mysql_main::res_set =execute_query(mysql_main::connect_obj,query);
+        cout<<"Registeration Successfull... :)\nThanks for registering with us..\nNow please login to continue.."<<endl;
     }
     mysql_close (mysql_main::connect_obj);
     return 0;

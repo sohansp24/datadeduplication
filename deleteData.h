@@ -89,15 +89,16 @@ void deleteUser(int userId)
             mapCountUser.insert(make_pair(mysql_delete::row[i],stoi(mysql_delete::row[i+1])));
         }
     }
+    cout<<"Deleting all the files user has uploaded"<<endl;
     for (string s:allShaValue)
     {
         count=mapCountUser.find(s)->second;
-        cout<<s<<"::"<<count<<endl;
         if (count==1)
         {
             query="delete from shaTable where sha256Value= '"+s+"' ;";
             map4count.erase(s);
             execute_query(mysql_delete::connect_obj,query);
+            deletefile(s);
         }
         else
         {
