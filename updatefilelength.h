@@ -24,7 +24,7 @@ void LengthOfOriginalFile(int fileId,string FileName)
         long end=fin.tellg();
         filesize=(end-begin);
     }
-    string query="update userFile set fileSize= "+to_string(filesize+1) +" where userFileId= "+to_string(fileId)+" ;";
+    string query="update userFile set fileSize= "+to_string(filesize) +" where userFileId= "+to_string(fileId)+" ;";
     execute_query(mysql_filelen::connect_obj,query);
     fin.close();
 }
@@ -44,7 +44,7 @@ void LengthOfChunkFile(vector<string> sha256list)
             fin.seekg(0,ios::end);
             filelen=fin.tellg();
             //cout<<"Length"<<filelen;
-            string query="update hashTable set chunkSize= "+to_string(filelen+1)+ " where sha256= '"+i+"' ;";
+            string query="update hashTable set chunkSize= "+to_string(filelen)+ " where sha256= '"+i+"' ;";
             execute_query(mysql_filelen::connect_obj,query);
         }
         else
