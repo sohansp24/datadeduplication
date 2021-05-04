@@ -66,7 +66,7 @@ vector<string> retrieveSha(vector<int> shaid)
     return arrSha;
 }
 
-int showFiles(int UserId)
+int showFiles(int UserId,int flag=0)
 {
     string query="select userFileId,fileName from userFile where userId= "+to_string(UserId)+" ;";
     mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
@@ -79,10 +79,13 @@ int showFiles(int UserId)
         {
             cout<<mysql_retrieve::row[i]<<"\t"<<mysql_retrieve::row[i+1]<<endl;
         }
-        cout<<"Enter FileID: ";
-        int fileid;
-        cin>>fileid;
-        cout<<endl;
+        int fileid=0;
+        if(flag==0)
+        {
+            cout<<"Enter FileID: ";
+            cin>>fileid;
+            cout<<endl;
+        }
         return fileid;
     }
     else

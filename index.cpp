@@ -18,7 +18,7 @@ using namespace std;
 void userMenu(int UserId, string username)
 {
     while(true){
-    cout<<"Welcome "+ username + "\n** Please Select a option **\n\t1. Upload File\n\t2. Download File\n\t3. Delete File\n\t4. Delete Version\n\t5. Delete User\n\t6. Update File\n\t7. Exit"<<endl;
+    cout<<"Welcome "+ username + "\n** Please Select a option **\n\t1. Upload File\n\t2. Download File\n\t3. Update File\n\t4. Delete File\n\t5. Delete Version\n\t6. Show My Uploaded Files\n\t7. Delete User\n\t8. Exit"<<endl;
     int ch;
     cin>>ch;
     switch(ch)
@@ -30,21 +30,25 @@ void userMenu(int UserId, string username)
             DownloadFile(UserId);
             break;
         case 3:
-            deleteFile(UserId);
-            break;
-        case 4:
-            deleteVersion(UserId);
-            break;
-        case 5:
-            deleteUser(UserId);
-            break;
-        case 6:
             update(UserId);
             break;
+        case 4:
+            deleteFile(UserId);
+            break;
+        case 5:
+            deleteVersion(UserId);
+            break;
+        case 6:
+            cout<<"Files you have uploaded are :-"<<endl;
+            showFiles(UserId,1);
+            break;
         case 7:
+            deleteUser(UserId);
+            break;
+        case 8:
             cout<<"Bye..."<<endl;
             exit(0);
-            break;
+            break;    
         default:
             cout<<"Invalid Input"<<endl;
             break;
