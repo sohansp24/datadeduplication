@@ -5,7 +5,7 @@
 using namespace std;
 void showprogress(float progress)
 {
-    int barWidth = 100;
+    int barWidth = 70;
     cout << "[";
     int pos = barWidth * progress;
     for (int i = 0; i < barWidth; ++i) 
