@@ -60,7 +60,7 @@ int main(int argc, char const *argv[])
 {
 
     int choice;
-    cout<<"Enter Choice:\n1.Login\n2.Register"<<endl;
+    cout<<"Enter Choice:\n\t1.Login\n\t2.Register"<<endl;
     cin>>choice;
     if(choice==1)
     {

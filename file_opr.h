@@ -3,6 +3,20 @@
 #include<bits/stdc++.h>
 #include<fstream>
 using namespace std;
+void showprogress(float progress)
+{
+    int barWidth = 100;
+    cout << "[";
+    int pos = barWidth * progress;
+    for (int i = 0; i < barWidth; ++i) 
+    {
+        if (i < pos) std::cout << "=";
+        else if (i == pos) std::cout << ">";
+        else std::cout << " ";
+    }
+    cout << "] " << int(progress * 100.0) << " %\r";
+    cout.flush();
+}
 void createFile(int hash_val,string word, string hash256val)
 {
     ofstream fout;
@@ -42,10 +56,8 @@ void createOriginal(vector<string> sha256,string fileName)
 void deletefile(string shaValue)
 {
     string fileName="chunks/"+shaValue;
-    if(remove(fileName.c_str())==0)
-        cout<<"File "+shaValue+" Deleted Sucessfully"<<endl;
-    else 
-        cout<<"File "+shaValue+" Deletion Failed"<<endl;
+    if(remove(fileName.c_str())!=0)
+        cout<<"\nFile "+shaValue+" Deletion Failed"<<endl;
 }
 #endif
 /*

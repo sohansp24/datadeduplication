@@ -38,6 +38,8 @@ void deleteFile(int userId)
             while (((mysql_delete::row=mysql_fetch_row(mysql_delete::res_set)) !=NULL))
                 mapCountFile.insert(make_pair(mysql_delete::row[i],stoi(mysql_delete::row[i+1])));
         }
+        int del_progress=0;
+        int length=mapCountFile.size();
         for(string i: sha256)
         {
             if(mapCountFile.find(i)!=mapCountFile.end())
@@ -56,6 +58,7 @@ void deleteFile(int userId)
                     //cout<<query<<endl;
                     execute_query(mysql_delete::connect_obj,query);
                 }
+                showprogress((float)++del_progress/length);
             }
             else
             {
@@ -64,7 +67,7 @@ void deleteFile(int userId)
         }
         query="delete from hashTable where userFileId= "+to_string(fileId)+" ;";
         execute_query(mysql_delete::connect_obj,query); 
-        cout<<"File Deleted"<<endl;
+        cout<<"\nFile Deleted"<<endl;
     }
 }
 void deleteUser(int userId)

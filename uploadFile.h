@@ -57,7 +57,7 @@ void upload(int fileId,string fileName)
 {
     fileLocation="file/"+fileName;
     createChunk(fileId,fileLocation);
-    cout<<"Thank You :) File uploaded"<<endl;
+    cout<<"\nThank You :) File uploaded"<<endl;
 }
 void insertIntoFileTable(int FileId,string fileName )
 {

@@ -90,7 +90,7 @@ void getShaCount()
     map4count.clear();
     if(numrows==0)
     {
-        cout<<"SHA Table Empty"<<endl;
+        cout<<"\nSHA Table Empty"<<endl;
     }
     else
     {
@@ -136,6 +136,7 @@ void createChunk(int fileId,string fileLocation)
     //ofstream fout;
     //fout.open("testing.txt",ios_base::app);
     int flag;
+    float progress=0;
     while(curr<=size)
     {
         //fout<<string_w;
@@ -175,11 +176,14 @@ void createChunk(int fileId,string fileLocation)
             }
             if(flag==0)
             {
-                cout<<counter++<<" => YES hash\tYES 256\t"<<"  =>  "<<has<<"\tsha256\t"<<hashIn256<<endl;
+                cout<<counter++<<"\n => YES hash\tYES 256\t"<<"  =>  "<<has<<"\tsha256\t"<<hashIn256<<endl;
+                cout.flush();
                 string query="Insert into hashTable (userFileId,rollHash,sha256) values ('"+ID+"','"+has+"','"+hashIn256+"')";
                 execute_query(mysql_createchunk::connect_obj,query);
             }
+            progress+=string_w.length();
             string_w="";
+            showprogress((float)progress/size);
         }
         hash = nexthash(hash);
         //cout<<fin.gcount()*1024<<"    "<<curr<<endl;

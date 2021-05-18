@@ -72,13 +72,13 @@ int showFiles(int UserId,int flag=0)
     mysql_retrieve::res_set=execute_query(mysql_retrieve::connect_obj,query);
     unsigned int numrows =mysql_num_rows(mysql_retrieve::res_set);
     int i=0;
-    cout<<"FileID\tFileName"<<endl;
     if (numrows!=0)
     {
         while (((mysql_retrieve::row=mysql_fetch_row(mysql_retrieve::res_set)) !=NULL))
         {
             cout<<mysql_retrieve::row[i]<<"\t"<<mysql_retrieve::row[i+1]<<endl;
         }
+        cout<<"FileID\tFileName"<<endl;
         int fileid=0;
         if(flag==0)
         {
@@ -146,7 +146,7 @@ unordered_map<int,vector<string>> retrieveMap()
         }
     }
     else
-        cout<<"Hash Table Empty"<<endl;
+        cout<<"Hash Table Empty\n"<<endl;
     return tempMap;
 }
 vector<string> retrieveAllShaValue(int userId)
