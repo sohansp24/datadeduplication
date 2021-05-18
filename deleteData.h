@@ -39,7 +39,7 @@ void deleteFile(int userId)
                 mapCountFile.insert(make_pair(mysql_delete::row[i],stoi(mysql_delete::row[i+1])));
         }
         int del_progress=0;
-        int length=mapCountFile.size();
+        int length=sha256.size();
         for(string i: sha256)
         {
             if(mapCountFile.find(i)!=mapCountFile.end())
@@ -58,12 +58,12 @@ void deleteFile(int userId)
                     //cout<<query<<endl;
                     execute_query(mysql_delete::connect_obj,query);
                 }
-                showprogress((float)++del_progress/length);
             }
             else
             {
-                cout<<"Nothing found"<<endl;
+                cout<<"\nNothing found"<<endl;
             }
+            showprogress((float)++del_progress/length);
         }
         query="delete from hashTable where userFileId= "+to_string(fileId)+" ;";
         execute_query(mysql_delete::connect_obj,query); 
@@ -150,7 +150,7 @@ void deleteVersion(int userId)
         }
     }
     int del_progress=0;
-    int length=mapCountFile.size();
+    int length=sha256.size();
     for(string i:sha256)
     {
         if(mapCountFile.find(i)!=mapCountFile.end())
@@ -166,12 +166,12 @@ void deleteVersion(int userId)
                 query="update shaTable set shacount= "+to_string(--count) + " where sha256Value= '"+i+"' ;";
                 execute_query(mysql_delete::connect_obj,query);
             }
-            showprogress((float)++del_progress/length);
+            
             query="delete from hashTable where userFileId= "+to_string(versionId)+" ;";
             execute_query(mysql_delete::connect_obj,query);
         }
-
+        showprogress((float)++del_progress/length);
     }
-    cout<<"Version of the "<<fileName<<" has been deleted"<<endl;
+    cout<<"\nVersion of the "<<fileName<<" has been deleted"<<endl;
 }
 #endif
