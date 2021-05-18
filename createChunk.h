@@ -140,7 +140,7 @@ void createChunk(int fileId,string fileLocation)
     while(curr<=size)
     {
         //fout<<string_w;
-        if ((hash & mask)==0 || curr==size-1)
+        if ((hash & mask)==0 || curr==size)
         {
             //cout<<"----";
             string hashIn256=sha256(string_w);
@@ -183,8 +183,8 @@ void createChunk(int fileId,string fileLocation)
             }
             progress+=string_w.length();
             string_w="";
-            showprogress((float)progress/size);
         }
+	showprogress((float)progress/size);
         hash = nexthash(hash);
         //cout<<fin.gcount()*1024<<"    "<<curr<<endl;
         //cout<<"\t"<<curr++;
