@@ -93,6 +93,8 @@ void deleteUser(int userId)
         }
     }
     cout<<"Deleting all the files user has uploaded"<<endl;
+    int del_progress=0;
+    int length=allShaValue.size();
     for (string s:allShaValue)
     {
         count=mapCountUser.find(s)->second;
@@ -116,8 +118,9 @@ void deleteUser(int userId)
             query="delete from fileDetails where userFileId= "+to_string(i)+" ;";
             execute_query(mysql_delete::connect_obj,query);
         }
+        showprogress((float)++del_progress/length);
     }
-    cout<<"User deleted"<<endl;
+    cout<<"\nUser deleted"<<endl;
     exit(0);
 }
 void deleteVersion(int userId)
@@ -146,6 +149,8 @@ void deleteVersion(int userId)
             mapCountFile.insert(make_pair(mysql_delete::row[i],stoi(mysql_delete::row[i+1])));
         }
     }
+    int del_progress=0;
+    int length=mapCountFile.size();
     for(string i:sha256)
     {
         if(mapCountFile.find(i)!=mapCountFile.end())
@@ -161,9 +166,11 @@ void deleteVersion(int userId)
                 query="update shaTable set shacount= "+to_string(--count) + " where sha256Value= '"+i+"' ;";
                 execute_query(mysql_delete::connect_obj,query);
             }
+            showprogress((float)++del_progress/length);
             query="delete from hashTable where userFileId= "+to_string(versionId)+" ;";
             execute_query(mysql_delete::connect_obj,query);
         }
+
     }
     cout<<"Version of the "<<fileName<<" has been deleted"<<endl;
 }
