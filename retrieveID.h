@@ -74,11 +74,11 @@ int showFiles(int UserId,int flag=0)
     int i=0;
     if (numrows!=0)
     {
+        cout<<"FileID\tFileName"<<endl;
         while (((mysql_retrieve::row=mysql_fetch_row(mysql_retrieve::res_set)) !=NULL))
         {
             cout<<mysql_retrieve::row[i]<<"\t"<<mysql_retrieve::row[i+1]<<endl;
         }
-        cout<<"FileID\tFileName"<<endl;
         int fileid=0;
         if(flag==0)
         {
