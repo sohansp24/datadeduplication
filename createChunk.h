@@ -176,7 +176,7 @@ void createChunk(int fileId,string fileLocation)
             }
             if(flag==0)
             {
-                cout<<counter++<<"\n => YES hash\tYES 256\t"<<"  =>  "<<has<<"\tsha256\t"<<hashIn256<<endl;
+                cout<<"\n"<<counter++<<"=> YES hash\tYES 256\t"<<"  =>  "<<has<<"\tsha256\t"<<hashIn256<<endl;
                 cout.flush();
                 string query="Insert into hashTable (userFileId,rollHash,sha256) values ('"+ID+"','"+has+"','"+hashIn256+"')";
                 execute_query(mysql_createchunk::connect_obj,query);
